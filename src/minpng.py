@@ -1,6 +1,12 @@
+"""
+http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html
+"""
+
+
 def main():
     with open("x.png", "wb") as out:
         write_minimum_png(out)
+
 
 def write_minimum_png(out):
     write_signature(out)
