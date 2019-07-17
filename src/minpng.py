@@ -6,7 +6,7 @@ import zlib
 
 
 def main():
-    with open("x.png", "wb") as out:
+    with open("void.png", "wb") as out:
         write_minimum_png(out)
 
 
