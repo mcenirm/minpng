@@ -42,8 +42,9 @@ def write_ihdr(out, width, height, bit_depth, color_type):
 	write_chunk(out, PNG_CHUNK_TYPE_IHDR, data)
 
 
+PNG_CHUNK_TYPE_IEND = b'IEND'
 def write_iend(out):
-    pass
+    write_chunk(out, PNG_CHUNK_TYPE_IEND, b'')
 
 
 def four_byte(i):
