@@ -10,6 +10,11 @@ def main():
         write_minimum_png(out)
 
 
+PNG_SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10]
+PNG_SIGNATURE_AS_BYTES = bytes(PNG_SIGNATURE)
+PNG_CHUNK_TYPE_IHDR = b"IHDR"
+PNG_CHUNK_TYPE_IEND = b"IEND"
+PNG_CHUNK_TYPE_IDAT = b"IDAT"
 PNG_COLOR_TYPE_GRAYSCALE = 0
 
 
@@ -30,15 +35,8 @@ def write_one_black_pixel(out, bit_depth, color_type):
     write_idat(out, scanlines, filter_none)
 
 
-PNG_SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10]
-PNG_SIGNATURE_AS_BYTES = bytes(PNG_SIGNATURE)
-
-
 def write_signature(out):
     out.write(PNG_SIGNATURE_AS_BYTES)
-
-
-PNG_CHUNK_TYPE_IHDR = b"IHDR"
 
 
 def write_ihdr(out, width, height, bit_depth, color_type):
@@ -58,14 +56,8 @@ def write_ihdr(out, width, height, bit_depth, color_type):
     write_chunk(out, PNG_CHUNK_TYPE_IHDR, data)
 
 
-PNG_CHUNK_TYPE_IEND = b"IEND"
-
-
 def write_iend(out):
     write_chunk(out, PNG_CHUNK_TYPE_IEND, b"")
-
-
-PNG_CHUNK_TYPE_IDAT = b"IDAT"
 
 
 def write_idat(out, scanlines, filter):
