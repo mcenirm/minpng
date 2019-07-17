@@ -38,26 +38,36 @@ def write_signature(out):
     out.write(PNG_SIGNATURE_AS_BYTES)
 
 
-PNG_CHUNK_TYPE_IHDR = b'IHDR'
+PNG_CHUNK_TYPE_IHDR = b"IHDR"
+
+
 def write_ihdr(out, width, height, bit_depth, color_type):
-    data = b''.join([
-        four_byte(width),
-        four_byte(height),
-        one_byte(bit_depth),
-        one_byte(color_type),
-        one_byte(0), # deflate/inflate compression with a sliding window of at most 32768 bytes
-        one_byte(0), # adaptive filtering with five basic filter types
-        one_byte(0), # no interlace
-    ])
+    data = b"".join(
+        [
+            four_byte(width),
+            four_byte(height),
+            one_byte(bit_depth),
+            one_byte(color_type),
+            one_byte(
+                0
+            ),  # deflate/inflate compression with a sliding window of at most 32768 bytes
+            one_byte(0),  # adaptive filtering with five basic filter types
+            one_byte(0),  # no interlace
+        ]
+    )
     write_chunk(out, PNG_CHUNK_TYPE_IHDR, data)
 
 
-PNG_CHUNK_TYPE_IEND = b'IEND'
+PNG_CHUNK_TYPE_IEND = b"IEND"
+
+
 def write_iend(out):
-    write_chunk(out, PNG_CHUNK_TYPE_IEND, b'')
+    write_chunk(out, PNG_CHUNK_TYPE_IEND, b"")
 
 
-PNG_CHUNK_TYPE_IDAT = b'IDAT'
+PNG_CHUNK_TYPE_IDAT = b"IDAT"
+
+
 def write_idat(out, scanlines, filter):
     data1 = filter(scanlines)
     data2 = zlib.compress(data1)
@@ -65,7 +75,7 @@ def write_idat(out, scanlines, filter):
 
 
 def filter_none(scanlines):
-    return b'\0' + scanlines
+    return b"\0" + scanlines
 
 
 def four_byte(i):
@@ -77,7 +87,7 @@ def one_byte(i):
 
 
 def to_bytes(i, length):
-    return int(i).to_bytes(length, 'big', signed=False)
+    return int(i).to_bytes(length, "big", signed=False)
 
 
 def write_chunk(out, chunk_type, chunk_data):
